@@ -1,9 +1,13 @@
 {
  "name": "todos",
+ "short_name": "todos",
+ "start_url": "/todos",
  "description": "my todos app",
  "version": "1.0",
  "display": "standalone",
  "orientation": "portrait",
+ "theme_color": "#ead7d7",
+ "background_color": "#fff",
  "icons": [
   {
    "src": "./favicon/android-icon-36x36.png",

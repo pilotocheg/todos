@@ -17,7 +17,9 @@ class TodoItem extends React.Component {
   }
   toggleTextRedactor() {
     this.setState({
-      isRedactor: !this.state.isRedactor 
+      isRedactor: true
+    }, () => {
+      this.textarea.focus();
     })
   }
 
@@ -68,6 +70,7 @@ class TodoItem extends React.Component {
           id="delete-btn"
         >&#10006;</button>
         <textarea 
+          ref={e => this.textarea = e}
           id="textRedactor" 
           type="text" 
           value={ this.state.text } 
