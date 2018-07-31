@@ -67,7 +67,7 @@ class TodoItem extends React.Component {
           onClick={ this.props.onRemove }
           id="delete-btn"
         >&#10006;</button>
-        <input 
+        <textarea 
           id="textRedactor" 
           type="text" 
           value={ this.state.text } 
@@ -77,7 +77,7 @@ class TodoItem extends React.Component {
           } 
           onBlur={ this.pushTextDataOnBlur.bind(this) }
           style={ { display: this.state.isRedactor ? 'block' : 'none' } }
-          />
+          ></textarea>
       </li>
     )
   }
