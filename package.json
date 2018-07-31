@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "todo app, created on React",
   "scripts": {
-    "start": "parcel index.html -p 3000",
-    "build": "rm -rf dist && parcel build index.html --public-url /todos",
+    "start": "parcel src/index.html -p 3000",
+    "build": "rm -rf dist && parcel build src/index.html --public-url /todos",
     "publish": "gh-pages -d dist"
   },
   "keywords": [
@@ -13,6 +13,7 @@
   "author": "Dmitriev Viacheslav",
   "license": "MIT",
   "dependencies": {
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
