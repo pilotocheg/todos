@@ -295,7 +295,7 @@ class TodoApp extends React.Component {
                 <button 
                   id="clear-all"
                   onClick={ this.clearCompleted.bind(this) }
-                >Clear completed</button> : null
+                >clear completed</button> : null
             }
           </section>) : null
         }

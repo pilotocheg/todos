@@ -1,11 +1,18 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('./fonts/HelveticaNeue.ttf');
+  src: local('font'), url('./fonts/HelveticaNeue.ttf')format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue';
 }
 
 body {
-  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* line-height: 1.4em; */
+  font: 14px 'Helvetica Neue';
   background: #f5f5f5;
 }
 
@@ -46,8 +53,9 @@ li {
 }
 
 #header {
-  font-size: 100px;
+  font-size: 60px;
   font-weight: 100;
+  line-height: 1.5;
   text-align: center;
   margin: 0 0 15px;
   color: rgba(175, 47, 47, 0.15);
@@ -150,8 +158,8 @@ li:hover #delete-btn {
   color: #777;
   border-top: 1px solid #e6e6e6;
   padding: 10px 15px;
-  font-size: 14px;
-  line-height: 1.4em;
+  font-size: 10px;
+  line-height: 1;
   background-color: #fff;
   position: relative;
   box-shadow: 0px 0px 7px rgba(0,0,0,0.25);
@@ -184,7 +192,8 @@ li:hover #delete-btn {
   outline: none;
   cursor: pointer;
   color: #777;
-  font-size: 14px;
+  font-size: 10px;
+  line-height: 0.9;
 }
 
 #clear-all:hover {
@@ -202,7 +211,7 @@ li:hover #delete-btn {
 #buttons-div button {
   background-color: transparent;
   color: inherit;
-  font-size: 14px;
+  font-size: 10px;
   margin: 3px;
   padding: 3px 7px;
   border: 1px solid transparent;
@@ -221,10 +230,10 @@ li:hover #delete-btn {
 
 #textRedactor {
   padding: 6px;
-  margin-left: 43px;
+  margin-left: 52px;
   position: absolute;
   z-index: 8;
-  width: 90%;
+  width: calc(100% - 52px);
   height: 100%;
   min-height: 66px;
   top: 0;
@@ -235,4 +244,19 @@ li:hover #delete-btn {
   font-size: 24px;
   line-height: 1.4em;
   color: #4d4d4d;
+}
+
+@media (min-width: 576px) {
+  #header {
+    font-size: 100px;
+    line-height: 1;
+  }
+  #timer-footer,
+  #clear-all {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  #buttons-div button {
+    font-size: 14px;
+  }
 }

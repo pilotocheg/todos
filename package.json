@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "todo app, created on React",
   "scripts": {
-    "start": "parcel src/index.html -p 3000",
+    "start": "rm -rf dist && parcel src/index.html -p 3000",
     "build": "rm -rf dist && parcel build src/index.html --public-url /todos",
     "publish": "gh-pages -d dist"
   },
