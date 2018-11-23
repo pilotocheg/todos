@@ -36,6 +36,7 @@ ul {
 
 li {
   width: 100%;
+  min-height: 66.33px;
   font-size: 24px;
   line-height: 1.4em;
   padding: 16px 40px 16px 50px;
@@ -44,6 +45,11 @@ li {
   position: relative;
   color: #4d4d4d;
   transition: color 0.4s;
+}
+
+li.completed {
+  text-decoration: line-through;
+  color: #d9d9d9;
 }
 
 #root {
@@ -87,7 +93,7 @@ li {
   z-index: 2;
 }
 
-#complete-btn {
+.complete-btn {
   position: absolute;
   left: 10px;
   top: 50%;
@@ -104,7 +110,12 @@ li {
   color: transparent;
 }
 
-#delete-btn {
+.complete-btn.checked {
+  color: #5dc2af;
+  border: 1px solid #5dc2af;
+}
+
+.delete-btn {
   position: absolute;
   right: 5px;
   top: 50%;
@@ -127,7 +138,7 @@ li {
   opacity: 1;
 } */
 
-#delete-btn:hover {
+.delete-btn:hover {
   color: #AF5B5E;
 }
 
@@ -228,7 +239,8 @@ li {
   border-color: rgba(175, 47, 47, 0.1) !important;
 }
 
-#textRedactor {
+.textRedactor {
+  display: none;
   padding: 15px 39px 16px 0;
   margin-left: 49px;
   position: absolute;

@@ -12,8 +12,10 @@ export default class Main extends Component {
       filter: 'all',
     };
 
+    this.onEdit = this.onEdit.bind(this);
     this.onItemAdd = this.onItemAdd.bind(this);
     this.filterItems = this.filterItems.bind(this);
+    this.onItemRemove = this.onItemRemove.bind(this);
     this.onCompletedToggle = this.onCompletedToggle.bind(this);
     this.handleAllComplete = this.handleAllComplete.bind(this);
   }
@@ -29,31 +31,30 @@ export default class Main extends Component {
   componentDidUpdate() {
     localStorage.setItem('myTodo', JSON.stringify(this.state));
   }
-  onItemAdd(e) {
-    if (e.keyCode === 13 && e.target.value.trim()) {
+  onItemAdd({ nativeEvent }) {
+    console.log(nativeEvent.target.value);
+
+    if (nativeEvent.keyCode === 13 && nativeEvent.target.value.trim()) {
       this.setState(({ list }) => ({
         list: list.concat({
-          value: e.target.value,
+          value: nativeEvent.target.value,
           id: Date.now(),
           completed: false,
         }),
-      }));
-      e.target.value = '';
+      }), () => {
+        nativeEvent.target.value = '';
+      });
     }
   }
-  onTextChange(id, text) {
-    if (text) {
-      this.setState(({ list }) => ({
-        list: list.map((item) => {
-          if (item.id === id) {
-            item.value = text;
-          }
-          return item;
-        }),
-      }));
-    } else {
-      this.onItemRemove(id);
-    }
+  onEdit(id, value) {
+    this.setState(({ list }) => ({
+      list: list.map((item) => {
+        if (item.id === id) {
+          item.value = value;
+        }
+        return item;
+      }),
+    }));
   }
 
   onItemRemove(id) {
@@ -123,14 +124,11 @@ export default class Main extends Component {
                 return true;
               }).map(item => (
                 <Task
-                  value={item.value}
-                  id={item.id}
+                  {...item}
                   key={item.id}
-                  onToggle={this.onCompletedToggle.bind(this, item.id)}
-                  onRemove={this.onItemRemove.bind(this, item.id)}
-                  onTextChange={this.onTextChange.bind(this)}
-                  completed={item.completed}
-                  display={item.display}
+                  onEdit={this.onEdit}
+                  onRemove={this.onItemRemove}
+                  onCompletedToggle={this.onCompletedToggle}
                 />
               ))
             }
