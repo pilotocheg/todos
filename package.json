@@ -1,16 +1,18 @@
 {
   "name": "todos",
-  "version": "1.0.0",
-  "description": "todo app, created on React",
+  "version": "1.2.0",
+  "description": "Simple todo app created on React",
   "scripts": {
     "start": "rm -rf dist && parcel src/index.html -p 3000",
     "build": "rm -rf dist && parcel build src/index.html --public-url /todos",
-    "publish": "gh-pages -d dist"
+    "publish": "gh-pages -d dist",
+    "lint": "./node_modules/.bin/eslint ./src/**/*.{js,jsx}",
+    "lint-fix": "./node_modules/.bin/eslint ./src/**/*.{js,jsx} --fix"
   },
   "keywords": [
     "todo"
   ],
-  "author": "Dmitriev Viacheslav",
+  "author": "Dmytriev Viacheslav",
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.6.2",
@@ -20,6 +22,12 @@
   "devDependencies": {
     "gh-pages": "^1.2.0",
     "parcel": "^1.9.7",
-    "parcel-plugin-sw-precache": "^0.5.2"
+    "parcel-plugin-sw-precache": "^0.5.2",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0"
   }
 }
