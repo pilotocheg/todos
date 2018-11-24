@@ -6,21 +6,20 @@ import PropTypes from 'prop-types';
  * checkbox for making all tasks completed
  */
 const Header = ({
-  onItemAdd, listLength, notCompletedLength, handleAllComplete,
+  onItemAdd, tasksCount, uncompletedCount, handleAllComplete,
 }) => (
   <div id="for-input">
     <input
       id="input"
-      type="text"
       onKeyDown={onItemAdd}
       placeholder="What needs to be done?"
     />
     {
-      listLength ? (
+      tasksCount ? (
         <div id="for-check-all">
           <label
             htmlFor="check-all"
-            style={{ color: notCompletedLength ? '#e6e6e6' : '#737373' }}
+            style={{ color: uncompletedCount ? '#e6e6e6' : '#737373' }}
           >❯
             <input
               id="check-all"
@@ -37,13 +36,13 @@ const Header = ({
 Header.propTypes = {
   handleAllComplete: PropTypes.func.isRequired, // makes all task completed
   onItemAdd: PropTypes.func.isRequired, // creates new task item
-  listLength: PropTypes.number, // number of tasks
-  notCompletedLength: PropTypes.number, // Amount of uncompleted tasks
+  tasksCount: PropTypes.number, // number of tasks
+  uncompletedCount: PropTypes.number, // Amount of uncompleted tasks
 };
 
 Header.defaultProps = {
-  listLength: 0,
-  notCompletedLength: 0,
+  tasksCount: 0,
+  uncompletedCount: 0,
 };
 
 export default Header;

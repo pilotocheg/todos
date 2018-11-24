@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Task from './task';
-import FilterBtn from './footer';
+import Footer from './footer';
 import Header from './header';
 
 export default class Main extends Component {
@@ -8,18 +8,22 @@ export default class Main extends Component {
     super();
 
     this.state = {
-      list: [],
-      filter: 'all',
+      list: [], // Tasks list
+      filter: 'all', // Filter for tasks rendering
     };
 
     this.onEdit = this.onEdit.bind(this);
     this.onItemAdd = this.onItemAdd.bind(this);
-    this.filterItems = this.filterItems.bind(this);
+    this.setFilter = this.setFilter.bind(this);
     this.onItemRemove = this.onItemRemove.bind(this);
+    this.clearCompleted = this.clearCompleted.bind(this);
     this.onCompletedToggle = this.onCompletedToggle.bind(this);
     this.handleAllComplete = this.handleAllComplete.bind(this);
   }
 
+  /**
+   * Loading data from local storage before component will mount
+   */
   componentWillMount() {
     if (localStorage.myTodo) {
       const localState = JSON.parse(localStorage.getItem('myTodo'));
@@ -28,12 +32,19 @@ export default class Main extends Component {
       }
     }
   }
+
+  /**
+   * Write data to local storage on each update
+   */
   componentDidUpdate() {
     localStorage.setItem('myTodo', JSON.stringify(this.state));
   }
-  onItemAdd({ nativeEvent }) {
-    console.log(nativeEvent.target.value);
 
+  /**
+   * Creates new task on enter key press
+   * @param {*} event.nativeEvent event of keypress
+   */
+  onItemAdd({ nativeEvent }) {
     if (nativeEvent.keyCode === 13 && nativeEvent.target.value.trim()) {
       this.setState(({ list }) => ({
         list: list.concat({
@@ -46,6 +57,12 @@ export default class Main extends Component {
       });
     }
   }
+
+  /**
+   * Edits task's value, when double clicking on it
+   * @param {number} id task's id
+   * @param {string} value textarea value
+   */
   onEdit(id, value) {
     this.setState(({ list }) => ({
       list: list.map((item) => {
@@ -57,12 +74,20 @@ export default class Main extends Component {
     }));
   }
 
+  /**
+   * Removes task from state
+   * @param {number} id task's id
+   */
   onItemRemove(id) {
     this.setState(({ list }) => ({
       list: list.filter(item => item.id !== id),
     }));
   }
 
+  /**
+   * Toggles task's status between completed and uncompleted
+   * @param {number} id task's id
+   */
   onCompletedToggle(id) {
     this.setState(({ list }) => ({
       list: list.map((item) => {
@@ -74,6 +99,29 @@ export default class Main extends Component {
     }));
   }
 
+  /**
+   * Changes filter for tasks list view
+   * @param {*} e event of filter btn
+   */
+  setFilter(e) {
+    this.setState({
+      filter: e.target.value,
+    });
+  }
+
+  /**
+   * Deletes all completed tasks from state
+   */
+  clearCompleted() {
+    this.setState(({ list }) => ({
+      list: list.filter(item => !item.completed),
+    }));
+  }
+
+  /**
+   * Changes all task's statuses to 'completed'
+   * @param {*} e event
+   */
   handleAllComplete(e) {
     const { list } = this.state;
     if (!list.some(item => !item.completed)) {
@@ -88,21 +136,17 @@ export default class Main extends Component {
     });
   }
 
-  clearCompleted() {
-    this.setState(({ list }) => ({
-      list: list.filter(item => !item.completed),
-    }));
-  }
-
-  filterItems(e) {
-    this.setState({
-      filter: e.target.value,
-    });
-  }
-
   render() {
     const { list, filter } = this.state;
-    const notCompletedLength = list.filter(item => !item.completed).length;
+    let uncompletedCount = 0;
+    let completedCount = 0;
+    list.forEach((item) => {
+      if (item.completed) {
+        completedCount += 1;
+      } else {
+        uncompletedCount += 1;
+      }
+    });
     return (
       <div id="main-app">
         <h1 id="header">my todos</h1>
@@ -110,8 +154,8 @@ export default class Main extends Component {
           <Header
             onItemAdd={this.onItemAdd}
             handleAllComplete={this.handleAllComplete}
-            listLength={list.length}
-            notCompletedLength={notCompletedLength}
+            tasksCount={list.length}
+            uncompletedCount={uncompletedCount}
           />
           <section>
             <ul>{
@@ -135,29 +179,14 @@ export default class Main extends Component {
             </ul>
           </section>
         </div>
-        {
-          list.length ? (
-            <section id="timer-footer">
-              <span id="uncomplete-counter">
-                { notCompletedLength } &nbsp;
-                { notCompletedLength === 1 ? 'item left' : 'items left' }
-              </span>
-              <div id="buttons-div">
-                <FilterBtn id="all-btn" value="all" filterItems={this.filterItems} />
-                <FilterBtn id="active-btn" value="active" filterItems={this.filterItems} />
-                <FilterBtn id="completed-btn" value="completed" filterItems={this.filterItems} />
-              </div>
-              {
-                this.state.list.filter(item => item.completed).length ?
-                  <button
-                    id="clear-all"
-                    onClick={this.clearCompleted.bind(this)}
-                  >clear completed
-                  </button> : null
-              }
-            </section>
-          ) : null
-        }
+        <Footer
+          filter={filter}
+          tasksCount={list.length}
+          completedCount={completedCount}
+          uncompletedCount={uncompletedCount}
+          setFilter={this.setFilter}
+          clearCompleted={this.clearCompleted}
+        />
       </div>
     );
   }

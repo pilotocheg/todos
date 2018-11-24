@@ -196,7 +196,8 @@ li.completed {
   bottom: -10px;
 }
 
-#clear-all {
+.clear-all {
+  display: none;
   float: right;
   background: transparent;
   border: none;
@@ -207,8 +208,12 @@ li.completed {
   line-height: 1;
 }
 
-#clear-all:hover {
+.clear-all:hover {
   text-decoration: underline;
+}
+
+.clear-all.visible {
+  display: block;
 }
 
 #buttons-div {
@@ -235,8 +240,8 @@ li.completed {
   border-color: rgba(175, 47, 47, 0.1);
 }
 
-#active-btn {
-  border-color: rgba(175, 47, 47, 0.1) !important;
+#buttons-div button.checked {
+  border-color: rgba(175, 47, 47, 0.1);
 }
 
 .textRedactor {
@@ -266,7 +271,7 @@ li.completed {
     line-height: 1;
   }
   #timer-footer,
-  #clear-all {
+  .clear-all {
     font-size: 14px;
     line-height: 1.4;
   }
