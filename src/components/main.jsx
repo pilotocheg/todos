@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Task from './task';
+import TasksList from './tasks-list'
 import Footer from './footer';
 import Header from './header';
 
@@ -157,27 +157,13 @@ export default class Main extends Component {
             tasksCount={list.length}
             uncompletedCount={uncompletedCount}
           />
-          <section>
-            <ul>{
-              list.filter((item) => {
-                if (filter === 'active') {
-                  return !item.completed;
-                } else if (filter === 'completed') {
-                  return item.completed;
-                }
-                return true;
-              }).map(item => (
-                <Task
-                  {...item}
-                  key={item.id}
-                  onEdit={this.onEdit}
-                  onRemove={this.onItemRemove}
-                  onCompletedToggle={this.onCompletedToggle}
-                />
-              ))
-            }
-            </ul>
-          </section>
+          <TasksList
+            list={list}
+            filter={filter}
+            onEdit={this.onEdit}
+            onItemRemove={this.onItemRemove}
+            onCompletedToggle={this.onCompletedToggle}
+          />
         </div>
         <Footer
           filter={filter}

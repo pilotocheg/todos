@@ -48,4 +48,4 @@ Footer.defaultProps = {
   tasksCount: 0,
   uncompletedCount: 0,
   completedCount: 0,
-}
+};

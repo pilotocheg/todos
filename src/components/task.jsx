@@ -59,7 +59,7 @@ export default class TodoItem extends Component {
       >
         <button
           onClick={() => onCompletedToggle(id)}
-          className={`complete-btn${completed ? ' checked' : '' }`}
+          className={`complete-btn${completed ? ' checked' : ''}`}
         >&#10003;
         </button>
         { value }
