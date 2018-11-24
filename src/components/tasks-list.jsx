@@ -36,12 +36,12 @@ TasksList.propTypes = {
   filter: PropTypes.string, // filter param
   onEdit: PropTypes.func.isRequired, // func for changing task's value
   onItemRemove: PropTypes.func.isRequired, // removes task
-  onCompletedToggle: PropTypes.func.isRequired, // toggle task's status between 'completed' and 'uncompleted'
+  onCompletedToggle: PropTypes.func.isRequired, // toggles task's status
 };
 
 TasksList.defaultProps = {
   list: [],
   filter: 'all',
-}
+};
 
 export default TasksList;

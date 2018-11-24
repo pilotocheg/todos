@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TasksList from './tasks-list'
+import TasksList from './tasks-list';
 import Footer from './footer';
 import Header from './header';
 
