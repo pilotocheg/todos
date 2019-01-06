@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
-import TasksList from './tasks-list';
-import Footer from './footer';
-import Header from './header';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import TasksList from "../components/tasks-list";
+import Footer from "../components/footer";
+import Header from "../components/header";
+import {
+  createTodoAction,
+  editTodoAction,
+  deleteTodoAction,
+} from "../actions/todo";
 
-export default class Main extends Component {
+class Main extends Component {
   constructor() {
     super();
 
     this.state = {
       list: [], // Tasks list
-      filter: 'all', // Filter for tasks rendering
+      filter: "all", // Filter for tasks rendering
     };
 
     this.onEdit = this.onEdit.bind(this);
@@ -26,7 +32,7 @@ export default class Main extends Component {
    */
   componentWillMount() {
     if (localStorage.myTodo) {
-      const localState = JSON.parse(localStorage.getItem('myTodo'));
+      const localState = JSON.parse(localStorage.getItem("myTodo"));
       if (Array.isArray(localState.list)) {
         this.setState(localState);
       }
@@ -37,7 +43,7 @@ export default class Main extends Component {
    * Write data to local storage on each update
    */
   componentDidUpdate() {
-    localStorage.setItem('myTodo', JSON.stringify(this.state));
+    localStorage.setItem("myTodo", JSON.stringify(this.state));
   }
 
   /**
@@ -46,15 +52,18 @@ export default class Main extends Component {
    */
   onItemAdd({ nativeEvent }) {
     if (nativeEvent.keyCode === 13 && nativeEvent.target.value.trim()) {
-      this.setState(({ list }) => ({
-        list: list.concat({
-          value: nativeEvent.target.value,
-          id: Date.now(),
-          completed: false,
+      this.setState(
+        ({ list }) => ({
+          list: list.concat({
+            value: nativeEvent.target.value,
+            id: Date.now(),
+            completed: false,
+          }),
         }),
-      }), () => {
-        nativeEvent.target.value = '';
-      });
+        () => {
+          nativeEvent.target.value = "";
+        },
+      );
     }
   }
 
@@ -65,7 +74,7 @@ export default class Main extends Component {
    */
   onEdit(id, value) {
     this.setState(({ list }) => ({
-      list: list.map((item) => {
+      list: list.map(item => {
         if (item.id === id) {
           item.value = value;
         }
@@ -90,7 +99,7 @@ export default class Main extends Component {
    */
   onCompletedToggle(id) {
     this.setState(({ list }) => ({
-      list: list.map((item) => {
+      list: list.map(item => {
         if (item.id === id) {
           item.completed = !item.completed;
         }
@@ -129,7 +138,7 @@ export default class Main extends Component {
     }
 
     this.setState({
-      list: list.map((item) => {
+      list: list.map(item => {
         item.completed = e.target.checked;
         return item;
       }),
@@ -140,7 +149,7 @@ export default class Main extends Component {
     const { list, filter } = this.state;
     let uncompletedCount = 0;
     let completedCount = 0;
-    list.forEach((item) => {
+    list.forEach(item => {
       if (item.completed) {
         completedCount += 1;
       } else {
@@ -177,3 +186,21 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ list, filter }) => ({
+  list,
+  filter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onTodoCreate: todo => dispatch(createTodoAction(todo)),
+  onTodoEdit: todo => dispatch(editTodoAction(todo)),
+  onTodoDelete: id => dispatch(deleteTodoAction(id)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);
+
+// export default Main;

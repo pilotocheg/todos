@@ -15,7 +15,11 @@
       "objectLiteralDuplicateProperties": true
     }
   },
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
   "rules": {
     "no-underscore-dangle": 0,
     "import/extensions": 0,
