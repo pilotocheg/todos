@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 /**
  * This component contains new task with it's text value and update, delete, checkCompleted methods
@@ -17,7 +17,7 @@ export default class TodoItem extends Component {
    * Show task redactor when double clicking on task element
    */
   showRedactor() {
-    this.textarea.style.display = 'block';
+    this.textarea.style.display = "block";
     this.textarea.focus();
   }
 
@@ -25,11 +25,11 @@ export default class TodoItem extends Component {
    * Hide task redactor
    */
   hideRedactor() {
-    this.textarea.style.display = 'none';
+    this.textarea.style.display = "none";
 
-    const { value, onRemove } = this.props;
+    const { value, onTodoDelete } = this.props;
     if (!value) {
-      onRemove();
+      onTodoDelete();
     }
   }
 
@@ -45,36 +45,37 @@ export default class TodoItem extends Component {
 
   render() {
     const {
-      onCompletedToggle,
+      onToggleCompleteTodo,
       completed,
-      onRemove,
-      onEdit,
+      onTodoDelete,
+      onTodoEdit,
       value,
       id,
     } = this.props;
     return (
       <li
-        className={completed ? 'completed' : null}
+        className={completed ? "completed" : null}
         onDoubleClick={this.showRedactor}
       >
         <button
-          onClick={() => onCompletedToggle(id)}
-          className={`complete-btn${completed ? ' checked' : ''}`}
-        >&#10003;
+          onClick={() => onToggleCompleteTodo(id)}
+          className={`complete-btn${completed ? " checked" : ""}`}
+        >
+          &#10003;
         </button>
-        { value }
-        <button
-          onClick={() => onRemove(id)}
-          className="delete-btn"
-        >&#10006;
+        {value}
+        <button onClick={() => onTodoDelete(id)} className="delete-btn">
+          &#10006;
         </button>
         <textarea
           className="textRedactor"
           value={value}
-          onChange={e => onEdit(id, e.target.value)}
+          onChange={e => onTodoEdit({ id, value: e.target.value })}
           onBlur={this.hideRedactor}
           onKeyDown={this.hideRedactorWithKey}
-          ref={(textarea) => { this.textarea = textarea; }}
+          ref={textarea => {
+            this.textarea = textarea;
+          }}
         />
       </li>
     );
@@ -82,15 +83,15 @@ export default class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-  onCompletedToggle: PropTypes.func.isRequired, // toggles task status
-  onRemove: PropTypes.func.isRequired, // deletes task
-  onEdit: PropTypes.func.isRequired, // changes task text value
+  onToggleCompleteTodo: PropTypes.func.isRequired, // toggles task status
+  onTodoDelete: PropTypes.func.isRequired, // deletes task
+  onTodoEdit: PropTypes.func.isRequired, // changes task text value
   id: PropTypes.number.isRequired, // unique id of the task
   value: PropTypes.string, // text value of the task
   completed: PropTypes.bool, // is task completed or not
 };
 
 TodoItem.defaultProps = {
-  value: '',
+  value: "",
   completed: false,
 };
