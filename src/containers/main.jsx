@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import TasksList from "../components/tasks-list";
 import Footer from "../components/footer";
 import Header from "../components/header";
@@ -117,8 +118,20 @@ const mapDispatchToProps = dispatch => ({
   onToggleCompleteTodoAction: id => dispatch(toggleCompleteTodoAction(id)),
   onFilterChangeAction: filter => dispatch(changeFilterAction(filter)),
   onToggleAllCompleteAction: value => dispatch(toggleAllCompleteAction(value)),
-  onDeleteAllCompletedAction: _ => dispatch(deleteAllCompletedAction()),
+  onDeleteAllCompletedAction: () => dispatch(deleteAllCompletedAction()),
 });
+
+Main.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.object).isRequired,
+  filter: PropTypes.string.isRequired,
+  onTodoCreateAction: PropTypes.func.isRequired,
+  onTodoDeleteAction: PropTypes.func.isRequired,
+  onTodoEditAction: PropTypes.func.isRequired,
+  onToggleCompleteTodoAction: PropTypes.func.isRequired,
+  onFilterChangeAction: PropTypes.func.isRequired,
+  onToggleAllCompleteAction: PropTypes.func.isRequired,
+  onDeleteAllCompletedAction: PropTypes.func.isRequired,
+};
 
 export default connect(
   mapStateToProps,

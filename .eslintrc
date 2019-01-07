@@ -35,6 +35,6 @@
     "no-mixed-operators": 0,
     "react/jsx-no-bind": 0,
     "linebreak-style": 0,
-    "no-param-reassign": 0,
+    "no-param-reassign": 0
   }
 }
