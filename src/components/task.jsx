@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 /**
  * This component contains new task with it's text value and update, delete, checkCompleted methods
@@ -17,7 +17,7 @@ export default class TodoItem extends Component {
    * Show task redactor when double clicking on task element
    */
   showRedactor() {
-    this.textarea.style.display = 'block';
+    this.textarea.style.display = "block";
     this.textarea.focus();
   }
 
@@ -25,7 +25,7 @@ export default class TodoItem extends Component {
    * Hide task redactor
    */
   hideRedactor() {
-    this.textarea.style.display = 'none';
+    this.textarea.style.display = "none";
 
     const { value, onRemove } = this.props;
     if (!value) {
@@ -54,27 +54,28 @@ export default class TodoItem extends Component {
     } = this.props;
     return (
       <li
-        className={completed ? 'completed' : null}
+        className={completed ? "completed" : null}
         onDoubleClick={this.showRedactor}
       >
         <button
           onClick={() => onCompletedToggle(id)}
-          className={`complete-btn${completed ? ' checked' : ''}`}
-        >&#10003;
+          className={`complete-btn${completed ? " checked" : ""}`}
+        >
+          &#10003;
         </button>
-        { value }
-        <button
-          onClick={() => onRemove(id)}
-          className="delete-btn"
-        >&#10006;
+        {value}
+        <button onClick={() => onRemove(id)} className="delete-btn">
+          &#10006;
         </button>
         <textarea
           className="textRedactor"
           value={value}
-          onChange={e => onEdit(id, e.target.value)}
+          onChange={e => onEdit({ id, value: e.target.value })}
           onBlur={this.hideRedactor}
           onKeyDown={this.hideRedactorWithKey}
-          ref={(textarea) => { this.textarea = textarea; }}
+          ref={textarea => {
+            this.textarea = textarea;
+          }}
         />
       </li>
     );
@@ -91,6 +92,6 @@ TodoItem.propTypes = {
 };
 
 TodoItem.defaultProps = {
-  value: '',
+  value: "",
   completed: false,
 };

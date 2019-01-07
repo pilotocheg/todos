@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
-import { rootReducer } from "./reducers";
+import todoReducer from "./reducers";
 
-export default createStore(rootReducer, applyMiddleware(logger));
+export default createStore(todoReducer, applyMiddleware(logger));

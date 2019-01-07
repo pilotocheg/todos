@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const FilterBtn = ({ setFilter, value, filter }) => {
-  const className = filter === value ? 'checked' : '';
+  const className = filter === value ? "checked" : "";
 
   return (
     <button
       className={className}
       value={value}
-      onClick={setFilter}
+      onClick={e => setFilter(e.target.value)}
     >
       {value}
     </button>
