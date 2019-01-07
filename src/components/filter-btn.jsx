@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const FilterBtn = ({ setFilter, value, filter }) => {
+const FilterBtn = ({ onFilterChange, value, filter }) => {
   const className = filter === value ? "checked" : "";
 
   return (
     <button
       className={className}
       value={value}
-      onClick={e => setFilter(e.target.value)}
+      onClick={e => onFilterChange(e.target.value)}
     >
       {value}
     </button>
@@ -17,7 +17,7 @@ const FilterBtn = ({ setFilter, value, filter }) => {
 
 FilterBtn.propTypes = {
   value: PropTypes.string.isRequired,
-  setFilter: PropTypes.func.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
 };
 

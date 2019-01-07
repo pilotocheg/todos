@@ -27,9 +27,9 @@ export default class TodoItem extends Component {
   hideRedactor() {
     this.textarea.style.display = "none";
 
-    const { value, onRemove } = this.props;
+    const { value, onTodoDelete } = this.props;
     if (!value) {
-      onRemove();
+      onTodoDelete();
     }
   }
 
@@ -45,10 +45,10 @@ export default class TodoItem extends Component {
 
   render() {
     const {
-      onCompletedToggle,
+      onToggleCompleteTodo,
       completed,
-      onRemove,
-      onEdit,
+      onTodoDelete,
+      onTodoEdit,
       value,
       id,
     } = this.props;
@@ -58,19 +58,19 @@ export default class TodoItem extends Component {
         onDoubleClick={this.showRedactor}
       >
         <button
-          onClick={() => onCompletedToggle(id)}
+          onClick={() => onToggleCompleteTodo(id)}
           className={`complete-btn${completed ? " checked" : ""}`}
         >
           &#10003;
         </button>
         {value}
-        <button onClick={() => onRemove(id)} className="delete-btn">
+        <button onClick={() => onTodoDelete(id)} className="delete-btn">
           &#10006;
         </button>
         <textarea
           className="textRedactor"
           value={value}
-          onChange={e => onEdit({ id, value: e.target.value })}
+          onChange={e => onTodoEdit({ id, value: e.target.value })}
           onBlur={this.hideRedactor}
           onKeyDown={this.hideRedactorWithKey}
           ref={textarea => {
@@ -83,9 +83,9 @@ export default class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-  onCompletedToggle: PropTypes.func.isRequired, // toggles task status
-  onRemove: PropTypes.func.isRequired, // deletes task
-  onEdit: PropTypes.func.isRequired, // changes task text value
+  onToggleCompleteTodo: PropTypes.func.isRequired, // toggles task status
+  onTodoDelete: PropTypes.func.isRequired, // deletes task
+  onTodoEdit: PropTypes.func.isRequired, // changes task text value
   id: PropTypes.number.isRequired, // unique id of the task
   value: PropTypes.string, // text value of the task
   completed: PropTypes.bool, // is task completed or not

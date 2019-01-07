@@ -36,7 +36,7 @@ class Main extends Component {
    */
   onItemAdd({ nativeEvent }) {
     if (nativeEvent.keyCode === 13 && nativeEvent.target.value.trim()) {
-      this.props.onTodoCreateAction({
+      this.props.onTodoCreate({
         value: nativeEvent.target.value,
         id: Date.now(),
         completed: false,
@@ -50,22 +50,22 @@ class Main extends Component {
    * @param {object} e event
    */
   handleAllComplete(e) {
-    const { list, onToggleAllCompleteAction } = this.props;
+    const { list, onToggleAllComplete } = this.props;
     if (!list.some(item => !item.completed)) {
       e.target.checked = false;
     }
-    onToggleAllCompleteAction(e.target.checked);
+    onToggleAllComplete(e.target.checked);
   }
 
   render() {
     const {
       list,
       filter,
-      onTodoEditAction,
-      onTodoDeleteAction,
-      onFilterChangeAction,
-      onToggleCompleteTodoAction,
-      onDeleteAllCompletedAction,
+      onTodoEdit,
+      onTodoDelete,
+      onFilterChange,
+      onToggleCompleteTodo,
+      onDeleteAllCompleted,
     } = this.props;
 
     let uncompletedCount = 0;
@@ -91,9 +91,9 @@ class Main extends Component {
           <TasksList
             list={list}
             filter={filter}
-            onEdit={onTodoEditAction}
-            onItemRemove={onTodoDeleteAction}
-            onCompletedToggle={onToggleCompleteTodoAction}
+            onTodoEdit={onTodoEdit}
+            onTodoDelete={onTodoDelete}
+            onToggleCompleteTodo={onToggleCompleteTodo}
           />
         </div>
         <Footer
@@ -101,8 +101,8 @@ class Main extends Component {
           tasksCount={list.length}
           completedCount={completedCount}
           uncompletedCount={uncompletedCount}
-          setFilter={onFilterChangeAction}
-          clearCompleted={onDeleteAllCompletedAction}
+          onFilterChange={onFilterChange}
+          onDeleteAllCompleted={onDeleteAllCompleted}
         />
       </div>
     );
@@ -112,25 +112,25 @@ class Main extends Component {
 const mapStateToProps = store => ({ ...store });
 
 const mapDispatchToProps = dispatch => ({
-  onTodoCreateAction: todo => dispatch(createTodoAction(todo)),
-  onTodoEditAction: todo => dispatch(editTodoAction(todo)),
-  onTodoDeleteAction: id => dispatch(deleteTodoAction(id)),
-  onToggleCompleteTodoAction: id => dispatch(toggleCompleteTodoAction(id)),
-  onFilterChangeAction: filter => dispatch(changeFilterAction(filter)),
-  onToggleAllCompleteAction: value => dispatch(toggleAllCompleteAction(value)),
-  onDeleteAllCompletedAction: () => dispatch(deleteAllCompletedAction()),
+  onTodoCreate: todo => dispatch(createTodoAction(todo)),
+  onTodoEdit: todo => dispatch(editTodoAction(todo)),
+  onTodoDelete: id => dispatch(deleteTodoAction(id)),
+  onToggleCompleteTodo: id => dispatch(toggleCompleteTodoAction(id)),
+  onFilterChange: filter => dispatch(changeFilterAction(filter)),
+  onToggleAllComplete: value => dispatch(toggleAllCompleteAction(value)),
+  onDeleteAllCompleted: () => dispatch(deleteAllCompletedAction()),
 });
 
 Main.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   filter: PropTypes.string.isRequired,
-  onTodoCreateAction: PropTypes.func.isRequired,
-  onTodoDeleteAction: PropTypes.func.isRequired,
-  onTodoEditAction: PropTypes.func.isRequired,
-  onToggleCompleteTodoAction: PropTypes.func.isRequired,
-  onFilterChangeAction: PropTypes.func.isRequired,
-  onToggleAllCompleteAction: PropTypes.func.isRequired,
-  onDeleteAllCompletedAction: PropTypes.func.isRequired,
+  onTodoCreate: PropTypes.func.isRequired,
+  onTodoDelete: PropTypes.func.isRequired,
+  onTodoEdit: PropTypes.func.isRequired,
+  onToggleCompleteTodo: PropTypes.func.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
+  onToggleAllComplete: PropTypes.func.isRequired,
+  onDeleteAllCompleted: PropTypes.func.isRequired,
 };
 
 export default connect(
